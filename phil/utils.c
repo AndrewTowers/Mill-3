@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 17:55:47 by andtruji          #+#    #+#             */
+/*   Updated: 2025/11/06 18:10:23 by andtruji         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_atoi(const char *nptr)
@@ -27,7 +39,8 @@ int	ft_atoi(const char *nptr)
 
 long long	timeline(void)
 {
-	struct	timeval tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL));
 }
@@ -37,7 +50,7 @@ long long	time_lapse(long long past, long long present)
 	return (present - past);
 }
 
-void print_state(t_rules *rules, int id, char *str)
+void	print_state(t_rules *rules, int id, char *str)
 {
 	pthread_mutex_lock(&rules->writing);
 	if (!rules->stop)

@@ -1,42 +1,55 @@
-#ifndef PHILO_H
-#define PHILO_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 17:55:52 by andtruji          #+#    #+#             */
+/*   Updated: 2025/11/06 17:58:33 by andtruji         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <pthread.h>
-#include <semaphore.h>
-#include <sys/time.h>
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <pthread.h>
+# include <semaphore.h>
+# include <sys/time.h>
 
 typedef struct s_rules
 {
-    int				num_philos;
-    long long		time_to_die;
-    long long		time_to_eat;
-    long long		time_to_sleep;
-    int				meals_required;
+	int				num_philos;
+	int				meals_required;
 	int				stop;
+	long long		time_to_die;
+	long long		time_to_eat;
+	long long		time_to_sleep;
+	pthread_mutex_t	stop_check;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
 	pthread_mutex_t	meal_check;
 	long long		start;
-}   t_rules;
+}	t_rules;
 
 typedef struct s_philo
 {
-    int			id;
+	int			id;
 	int			fork;
 	int			left_fork;
 	int			right_fork;
-    int			meals_eaten;
-    long long	last_meal_time;
-    pthread_t	thread;
-    t_rules		*rules;
-}   t_philo;
+	int			meals_eaten;
+	long long	last_meal_time;
+	pthread_t	thread;
+	t_rules		*rules;
+}	t_philo;
 
-int 		parse(int argc, char **argv, t_rules *rules);
-int 		init(t_rules *rules, t_philo **philos);
+int			parse(int argc, char **argv, t_rules *rules);
+int			init(t_rules *rules, t_philo **philos);
 
 void		*routine(t_philo *philo);
 

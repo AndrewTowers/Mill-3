@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 17:55:26 by andtruji          #+#    #+#             */
+/*   Updated: 2025/11/06 18:02:57 by andtruji         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	parse(int argc, char **argv, t_rules *rules)
 {
-	if(argc < 5 || argc > 6)
+	if (argc < 5 || argc > 6)
 	{
 		printf("ERROR: Incorrect number of arguments.\n");
 		return (0);
@@ -22,27 +34,27 @@ int	init(t_rules *rules, t_philo **philos)
 {
 	int	i;
 
-	rules->forks= malloc(sizeof(pthread_mutex_t) * rules->num_philos);
+	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->num_philos);
 	if (!rules->forks)
 		return (0);
 	i = 0;
 	while (i < rules->num_philos)
 		pthread_mutex_init(&rules->forks[i++], NULL);
+	pthread_mutex_init(&rules->stop_check, NULL);
 	pthread_mutex_init(&rules->writing, NULL);
 	pthread_mutex_init(&rules->meal_check, NULL);
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);
 	if (!*philos)
 		return (0);
 	i = 0;
-	while(i < rules->num_philos)
+	while (i < rules->num_philos)
 	{
 		(*philos)[i].id = i + 1;
 		(*philos)[i].left_fork = i;
 		(*philos)[i].right_fork = (i + 1) % rules->num_philos;
 		(*philos)[i].meals_eaten = 0;
 		(*philos)[i].last_meal_time = rules->start;
-		(*philos)[i].rules = rules;
-		i++;
+		(*philos)[i++].rules = rules;
 	}
 	return (1);
 }
