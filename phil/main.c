@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrew <andrew@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:19 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/06 19:18:34 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/07 08:31:33 by andrew           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	main_2(t_philo **philos, t_rules *rules)
 	monitor(*philos);
 	i = 0;
 	while (i < rules->num_philos)
-		pthread_detach((*philos)[i++].thread);
-		//pthread_join((*philos)[i++].thread, NULL);
+		pthread_join((*philos)[i++].thread, NULL);
 	i = 0;
 	while (i < rules->num_philos)
 		pthread_mutex_destroy(&rules->forks[i++]);

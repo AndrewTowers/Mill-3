@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrew <andrew@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:29 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/06 18:58:49 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:09:05 by andrew           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,25 @@ void	*monitor(void *arg)
 	}
 	return (NULL);
 }
+// void	*monitor(void *arg)
+// {
+// 	t_philo	*philos;
+// 	t_rules	*rules;
+
+// 	philos = (t_philo *)arg;
+// 	rules = philos[0].rules;
+// 	pthread_mutex_lock(&rules->stop_check);
+// 	while (!rules->stop)
+// 	{
+// 		if (rules->stop)
+// 		{
+// 			pthread_mutex_unlock(&rules->stop_check);
+// 			break ;
+// 		}
+// 		pthread_mutex_unlock(&rules->stop_check);
+// 		died(&philos, &rules);
+// 		all_ate(&philos, &rules);
+// 		usleep(1000);
+// 	}
+// 	return (NULL);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrew <andrew@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:32 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/06 19:25:22 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:11:20 by andrew           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	fake_sleep(long long time, t_rules *rules)
 	{
 		if (time_lapse(start, timeline()) >= time)
 			break ;
-		usleep(500);
+		usleep(100);
 	}
 	pthread_mutex_unlock(&rules->stop_check);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrew <andrew@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:35 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/06 19:30:30 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:13:05 by andrew           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	*routine(t_philo *philo)
 			break ;
 		}
 		pthread_mutex_unlock(&rules->stop_check);
+		print_state(rules, philo->id, "is thinking");
+		usleep(300);
 		tk_forks(philo);
 		eat(philo);
 		drop_forks(philo);
@@ -36,8 +38,6 @@ void	*routine(t_philo *philo)
 			break ;
 		print_state(rules, philo->id, "is slepping");
 		fake_sleep(rules->time_to_sleep, rules);
-		print_state(rules, philo->id, "is thinking");
-		usleep(300);
 	}
 	return (NULL);
 }
