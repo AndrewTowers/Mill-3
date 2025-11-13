@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrew <andrew@student.42.fr>              +#+  +:+       +#+        */
+/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:32 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/07 09:11:20 by andrew           ###   ########.fr       */
+/*   Updated: 2025/11/13 19:39:51 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	tk_forks(t_philo *philos)
 	t_rules	*rules;
 
 	rules = philos->rules;
-	pthread_mutex_lock(&rules->forks[philos->fork]);
+	pthread_mutex_lock(&rules->forks[philos->right_fork]);
+	print_state(rules, philos->id, "has taken a fork");
+	pthread_mutex_lock(&rules->forks[philos->left_fork]);
 	print_state(rules, philos->id, "has taken a fork");
 }
 
@@ -26,7 +28,8 @@ void	drop_forks(t_philo *philos)
 	t_rules	*rules;
 
 	rules = philos->rules;
-	pthread_mutex_unlock(&rules->forks[philos->fork]);
+	pthread_mutex_unlock(&rules->forks[philos->right_fork]);
+	pthread_mutex_unlock(&rules->forks[philos->left_fork]);
 }
 
 void	fake_sleep(long long time, t_rules *rules)
