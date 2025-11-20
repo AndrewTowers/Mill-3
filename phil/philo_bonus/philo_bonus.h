@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:52 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/13 19:40:55 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/20 17:31:31 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ typedef struct s_rules
 
 typedef struct s_philo
 {
+	pid_t		pid;
 	int			id;
+	int			status;
 	int			left_fork;
 	int			right_fork;
 	int			meals_eaten;

@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:47 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/13 19:51:19 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:54:59 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ long long	time_lapse(long long past, long long present)
 void	print_state(t_rules *rules, int id, char *str)
 {
 	pthread_mutex_lock(&rules->writing);
+	pthread_mutex_lock(&rules->stop_check);
 	if (!rules->stop)
 		printf("%lld %d %s\n", timeline() - rules->start, id, str);
+	pthread_mutex_unlock(&rules->stop_check);
 	pthread_mutex_unlock(&rules->writing);
 }

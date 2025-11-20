@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:19 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/13 19:21:43 by andtruji         ###   ########.fr       */
+/*   Updated: 2025/11/20 17:32:16 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main_2(t_philo **philos, t_rules *rules)
 
 	monitor(*philos);
 	i = 0;
+	while (wait((*philos)->status))
+		;
 	while (i < rules->num_philos)
 		pthread_join((*philos)[i++].thread, NULL);
 	i = 0;
@@ -42,12 +44,12 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < rules.num_philos)
 	{
-		if (pthread_create(&philos[i].thread, NULL,
-				(void *)routine, &philos[i]) != 0)
+		philos->pid = fork();
+		if (philos->pid == 0)
 		{
-			pthread_mutex_lock(&philos->rules->stop_check);
+			sem_wait(&rules.stop_check);
 			rules.stop = 1;
-			pthread_mutex_unlock(&philos->rules->stop_check);
+			sem_wait(&rules.stop_check);
 			break ;
 		}
 		i++;
