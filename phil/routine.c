@@ -26,7 +26,7 @@ void	*routine(t_philo *philo)
 		}
 		pthread_mutex_unlock(&philo->rules->stop_check);
 		print_state(philo->rules, philo->id, "is thinking");
-		usleep(300);
+		fake_sleep(philo->rules->time_to_eat / 2, philo->rules);
 		tk_forks(philo);
 		eat(philo);
 		drop_forks(philo);

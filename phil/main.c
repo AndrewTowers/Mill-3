@@ -12,14 +12,23 @@
 
 #include "philo.h"
 
-int	main_2(t_philo **philos, t_rules *rules)
+int	main_2(t_philo *philos, t_rules *rules)
 {
-	int	i;
+	pthread_t	monitor_thr;
+	int			i;
+	int			finished;
 
-	monitor(*philos);
+	pthread_create(&monitor_thr, NULL, monitor, philos);
+	finished = 0;
+	while (!finished)
+	{
+    	finished = all_ate(philos, rules);
+    	usleep(1000);
+	}
 	i = 0;
 	while (i < rules->num_philos)
-		pthread_join((*philos)[i++].thread, NULL);
+		pthread_join(philos[i++].thread, NULL);
+	pthread_join(monitor_thr, NULL);
 	i = 0;
 	while (i < rules->num_philos)
 		pthread_mutex_destroy(&rules->forks[i++]);
@@ -27,7 +36,7 @@ int	main_2(t_philo **philos, t_rules *rules)
 	pthread_mutex_destroy(&rules->meal_check);
 	pthread_mutex_destroy(&rules->stop_check);
 	free(rules->forks);
-	free(*philos);
+	free(philos);
 	return (0);
 }
 
@@ -55,5 +64,5 @@ int	main(int argc, char **argv)
 		}
 		i++;
 	}
-	return (main_2(&philos, &rules));
+	return (main_2(philos, &rules));
 }

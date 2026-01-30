@@ -57,6 +57,7 @@ void		fake_sleep(long long time, t_rules *rules);
 void		eat(t_philo *philos);
 
 void		*monitor(void *arg);
+int			all_ate(t_philo *philos, t_rules *rules);
 
 int			ft_atoi(const char *nptr);
 long long	timeline(void);
