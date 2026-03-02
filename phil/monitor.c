@@ -19,8 +19,13 @@ int	all_ate(t_philo *philos, t_rules *rules)
 	i = 0;
 	while (i < rules->num_philos)
 	{
+		pthread_mutex_lock(&rules->meal_check);
 		if (rules->meals_required > 0 && philos[i].meals_eaten < rules->meals_required)
+		{
+			pthread_mutex_unlock(&rules->meal_check);
 			return (0);
+		}
+		pthread_mutex_unlock(&rules->meal_check);
 		i++;
 	}
 	return (1);
@@ -66,6 +71,13 @@ void	*monitor(void *arg)
 			break;
 		}
 		pthread_mutex_unlock(&rules->stop_check);
+		if (rules->meals_required < 0 && all_ate(philos, rules))
+		{
+			pthread_mutex_lock(&rules->stop_check);
+			rules->stop = 1;
+			pthread_mutex_unlock(&rules->stop_check);
+			break ;
+		}
 		usleep(1000);
 	}
 	return (NULL);
