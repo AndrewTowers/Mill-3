@@ -16,19 +16,12 @@ int	main_2(t_philo *philos, t_rules *rules)
 {
 	pthread_t	monitor_thr;
 	int			i;
-	int			finished;
 
-	pthread_create(&monitor_thr, NULL, monitor, philos);
-	finished = 0;
-	while (!finished)
-	{
-    	finished = all_ate(philos, rules);
-    	usleep(1000);
-	}
 	i = 0;
+	pthread_create(&monitor_thr, NULL, monitor, philos);
+	pthread_join(monitor_thr, NULL);
 	while (i < rules->num_philos)
 		pthread_join(philos[i++].thread, NULL);
-	pthread_join(monitor_thr, NULL);
 	i = 0;
 	while (i < rules->num_philos)
 		pthread_mutex_destroy(&rules->forks[i++]);
