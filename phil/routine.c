@@ -26,10 +26,11 @@ void	*routine(t_philo *philo)
 		}
 		pthread_mutex_unlock(&philo->rules->stop_check);
 		print_state(philo->rules, philo->id, "is thinking");
-		fake_sleep(philo->rules->time_to_eat / 2, philo->rules);
+		usleep(300);
 		tk_forks(philo);
 		eat(philo);
 		drop_forks(philo);
+		print_state(philo->rules, philo->id, "is thinking");
 		if (philo->rules->meals_required > 0
 			&& philo->meals_eaten >= philo->rules->meals_required)
 			break ;
