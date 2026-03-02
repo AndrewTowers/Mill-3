@@ -38,8 +38,8 @@ void	drop_forks(t_philo *philos)
 	t_rules	*rules;
 
 	rules = philos->rules;
-	pthread_mutex_unlock(&rules->forks[philos->right_fork]);
 	pthread_mutex_unlock(&rules->forks[philos->left_fork]);
+	pthread_mutex_unlock(&rules->forks[philos->right_fork]);
 }
 
 void	fake_sleep(long long time, t_rules *rules)
