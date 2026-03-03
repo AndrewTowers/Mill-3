@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:52 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 17:31:31 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/03 12:16:12 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 # include <semaphore.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 
 typedef struct s_rules
 {
@@ -32,7 +33,7 @@ typedef struct s_rules
 	long long		time_to_eat;
 	long long		time_to_sleep;
 	sem_t			*stop_check;
-	sem_t			*forks;
+	sem_t			*fork_check;
 	sem_t			*writing;
 	sem_t			*meal_check;
 	long long		start;

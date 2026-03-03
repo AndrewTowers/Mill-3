@@ -1,6 +1,6 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I. -g #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -I. -g -fsanitize=thread
 SRC = main.c utils.c init.c routine.c monitor.c actions.c
 OBJ_DIR = objs
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

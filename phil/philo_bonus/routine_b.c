@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:35 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/13 19:57:08 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/03 13:16:47 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	*routine(t_philo *philo)
 		usleep(200);
 	while (1)
 	{
-		sem_wait(&philo->rules->stop_check);
+		sem_wait(philo->rules->stop_check);
 		if (philo->rules->stop)
 		{
-			sem_post(&philo->rules->stop_check);
+			sem_post(philo->rules->stop_check);
 			break ;
 		}
-		sem_post(&philo->rules->stop_check);
+		sem_post(philo->rules->stop_check);
 		print_state(philo->rules, philo->id, "is thinking");
 		tk_forks(philo);
 		eat(philo);

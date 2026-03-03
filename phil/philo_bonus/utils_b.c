@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:47 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 15:34:40 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/03 12:17:20 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	print_state(t_rules *rules, int id, char *str)
 	long long	time;
 
 	time = timeline() - rules->start;
-	pthread_mutex_lock(&rules->writing);
+	sem_wait(rules->writing);
 	if (!rules->stop)
 		printf("%lld %d %s\n", time, id, str);
-	pthread_mutex_unlock(&rules->writing);
+	sem_post(rules->writing);
 }

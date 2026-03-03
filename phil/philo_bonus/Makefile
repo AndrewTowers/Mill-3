@@ -1,6 +1,6 @@
 NAME = philo_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I. -g #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -I. -g -fsanitize=thread
 SRC = main_b.c utils_b.c init_b.c routine_b.c monitor_b.c actions_b.c
 OBJ_DIR = objs
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

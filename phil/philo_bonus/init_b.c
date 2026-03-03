@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:26 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 17:04:44 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/03 12:30:42 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	parse(int argc, char **argv, t_rules *rules)
 		rules->meals_required = ft_atoi(argv[5]);
 	rules->stop = 0;
 	rules->start = timeline();
+	if (rules->num_philos <= 0 || rules->time_to_die < 0
+		|| rules->time_to_eat < 0 || rules->time_to_sleep < 0
+		|| (argc == 6 && rules->meals_required < 0))
+	{
+		printf("ERROR: Invalid argument values.\n");
+		return (0);
+	}
 	return (1);
 }
 
@@ -35,12 +42,9 @@ int	init(t_rules *rules, t_philo **philos)
 {
 	int	i;
 
-	rules->forks = malloc(sizeof(sem_t) * rules->num_philos);
-	if (!rules->forks)
-		return (0);
 	i = 0;
-	while (i < rules->num_philos)
-		sem_open(&rules->forks[i++], O_CREAT, 0644, 1);
+	rules->fork_check = sem_open("/fork_check",
+			O_CREAT, 0644, rules->num_philos);
 	rules->stop_check = sem_open("/stop_check", O_CREAT, 0644, 1);
 	rules->writing = sem_open("/writing", O_CREAT, 0644, 1);
 	rules->meal_check = sem_open("/meal_check", O_CREAT, 0644, 1);
