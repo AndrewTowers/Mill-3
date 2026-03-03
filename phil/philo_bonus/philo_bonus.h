@@ -31,10 +31,10 @@ typedef struct s_rules
 	long long		time_to_die;
 	long long		time_to_eat;
 	long long		time_to_sleep;
-	sem_t			stop_check;
+	sem_t			*stop_check;
 	sem_t			*forks;
-	sem_t			writing;
-	sem_t			meal_check;
+	sem_t			*writing;
+	sem_t			*meal_check;
 	long long		start;
 }	t_rules;
 
@@ -47,7 +47,6 @@ typedef struct s_philo
 	int			right_fork;
 	int			meals_eaten;
 	long long	last_meal_time;
-	pthread_t	thread;
 	t_rules		*rules;
 }	t_philo;
 

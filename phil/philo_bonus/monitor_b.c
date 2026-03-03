@@ -12,52 +12,44 @@
 
 #include "philo_bonus.h"
 
-void	all_ate(t_philo **philos, t_rules **rules)
+int	all_ate(t_philo *philos, t_rules *rules)
 {
 	int	i;
-	int	all_ate;
 
 	i = 0;
-	all_ate = 1;
-	if ((*rules)->meals_required > 0)
+	while (i < rules->num_philos)
 	{
-		while (i < (*rules)->num_philos)
+		sem_wait(&rules->meal_check);
+		if (rules->meals_required > 0 && philos[i].meals_eaten < rules->meals_required)
 		{
-			if ((*philos)[i].meals_eaten < (*rules)->meals_required)
-			{
-				all_ate = 0;
-				break ;
-			}
-			i++;
+			sem_post(&rules->meal_check);
+			return (0);
 		}
-		if (all_ate)
-		{
-			sem_wait(&(*rules)->stop_check);
-			(*rules)->stop = 1;
-			sem_post(&(*rules)->stop_check);
-		}
+		sem_post(&rules->meal_check);
+		i++;
 	}
+	return (1);
 }
 
-void	died(t_philo **philos, t_rules **rules)
+void	died(t_philo *philos, t_rules *rules)
 {
 	int	i;
 
 	i = 0;
-	while (i < (*rules)->num_philos)
+	while (i < rules->num_philos)
 	{
-		sem_wait(&(*rules)->meal_check);
-		if (time_lapse((*philos)[i].last_meal_time,
-			timeline()) > (*rules)->time_to_die)
+		sem_wait(&rules->meal_check);
+		if (time_lapse(philos[i].last_meal_time,
+			timeline()) > rules->time_to_die)
 		{
-			print_state(*rules, (*philos)[i].id, "died");
-			sem_wait(&(*rules)->stop_check);
-			(*rules)->stop = 1;
-			sem_post(&(*rules)->stop_check);
-			sem_post(&(*rules)->meal_check);
+			print_state(rules, philos[i].id, "died");
+			sem_wait(&rules->stop_check);
+			rules->stop = 1;
+			sem_post(&rules->stop_check);
+			sem_post(&rules->meal_check);
 			break ;
 		}
-		sem_post(&(*rules)->meal_check);
+		sem_post(&rules->meal_check);
 		i++;
 	}
 }
@@ -71,6 +63,7 @@ void	*monitor(void *arg)
 	rules = philos[0].rules;
 	while (1)
 	{
+		died(philos, rules);
 		sem_wait(&rules->stop_check);
 		if (rules->stop)
 		{
@@ -78,8 +71,13 @@ void	*monitor(void *arg)
 			break ;
 		}
 		sem_post(&rules->stop_check);
-		died(&philos, &rules);
-		all_ate(&philos, &rules);
+		if (rules->meals_required > 0 && all_ate(philos, rules))
+		{
+			sem_wait(&rules->stop_check);
+			rules->stop = 1;
+			sem_post(&rules->stop_check);
+			break ;
+		}
 		usleep(1000);
 	}
 	return (NULL);

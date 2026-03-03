@@ -19,6 +19,7 @@ void	tk_forks(t_philo *philos)
 	rules = philos->rules;
 	if (philos->id % 2 == 0)
 	{
+		usleep(200);
 		pthread_mutex_lock(&rules->forks[philos->left_fork]);
 		print_state(rules, philos->id, "has taken a fork");
 		pthread_mutex_lock(&rules->forks[philos->right_fork]);

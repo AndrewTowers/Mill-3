@@ -71,7 +71,7 @@ void	*monitor(void *arg)
 			break;
 		}
 		pthread_mutex_unlock(&rules->stop_check);
-		if (rules->meals_required < 0 && all_ate(philos, rules))
+		if (rules->meals_required > 0 && all_ate(philos, rules))
 		{
 			pthread_mutex_lock(&rules->stop_check);
 			rules->stop = 1;

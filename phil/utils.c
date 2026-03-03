@@ -52,10 +52,13 @@ long long	time_lapse(long long past, long long present)
 
 void	print_state(t_rules *rules, int id, char *str)
 {
+	long long	time;
+
+	time = timeline() - rules->start;
 	pthread_mutex_lock(&rules->writing);
 	pthread_mutex_lock(&rules->stop_check);
 	if (!rules->stop)
-		printf("%lld %d %s\n", timeline() - rules->start, id, str);
+		printf("%lld %d %s\n", time, id, str);
 	pthread_mutex_unlock(&rules->stop_check);
 	pthread_mutex_unlock(&rules->writing);
 }

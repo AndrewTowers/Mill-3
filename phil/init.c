@@ -23,10 +23,17 @@ int	parse(int argc, char **argv, t_rules *rules)
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
 	rules->time_to_sleep = ft_atoi(argv[4]);
+	rules->meals_required = -1;
 	if (argc == 6)
 		rules->meals_required = ft_atoi(argv[5]);
 	rules->stop = 0;
 	rules->start = timeline();
+	if (rules->num_philos <= 0 || rules->time_to_die < 0 || rules->time_to_eat < 0
+		|| rules->time_to_sleep < 0 || (argc == 6 && rules->meals_required < 0))
+	{
+		printf("ERROR: Invalid argument values.\n");
+		return (0);
+	}
 	return (1);
 }
 

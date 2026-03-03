@@ -23,6 +23,7 @@ int	parse(int argc, char **argv, t_rules *rules)
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
 	rules->time_to_sleep = ft_atoi(argv[4]);
+	rules->meals_required = -1;
 	if (argc == 6)
 		rules->meals_required = ft_atoi(argv[5]);
 	rules->stop = 0;
@@ -40,9 +41,9 @@ int	init(t_rules *rules, t_philo **philos)
 	i = 0;
 	while (i < rules->num_philos)
 		sem_open(&rules->forks[i++], O_CREAT, 0644, 1);
-	sem_open(&rules->stop_check, O_CREAT, 0644, 1);
-	sem_open(&rules->writing, O_CREAT, 0644, 1);
-	sem_open(&rules->meal_check, O_CREAT, 0644, 1);
+	rules->stop_check = sem_open("/stop_check", O_CREAT, 0644, 1);
+	rules->writing = sem_open("/writing", O_CREAT, 0644, 1);
+	rules->meal_check = sem_open("/meal_check", O_CREAT, 0644, 1);
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);
 	if (!*philos)
 		return (0);

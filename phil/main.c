@@ -33,6 +33,14 @@ int	main_2(t_philo *philos, t_rules *rules)
 	return (0);
 }
 
+int	is_one(t_rules rules)
+{
+	printf("0 1 has taken a fork\n");
+	usleep(rules.time_to_die * 1000);
+	printf("%lld 1 died\n", rules.time_to_die);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_rules	rules;
@@ -42,6 +50,8 @@ int	main(int argc, char **argv)
 	memset(&rules, 0, sizeof(t_rules));
 	if (!parse(argc, argv, &rules))
 		return (1);
+	if (rules.num_philos == 1)
+		return (is_one(rules));
 	if (!init(&rules, &philos))
 		return (1);
 	i = 0;
