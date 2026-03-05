@@ -43,9 +43,9 @@ int	init(t_rules *rules, t_philo **philos)
 	int	i;
 
 	i = 0;
+	unlink_sems();
 	rules->fork_check = sem_open("/fork_check",
 			O_CREAT, 0644, rules->num_philos);
-	rules->stop_check = sem_open("/stop_check", O_CREAT, 0644, 1);
 	rules->writing = sem_open("/writing", O_CREAT, 0644, 1);
 	rules->meal_check = sem_open("/meal_check", O_CREAT, 0644, 1);
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);

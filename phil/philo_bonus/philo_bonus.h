@@ -32,7 +32,6 @@ typedef struct s_rules
 	long long		time_to_die;
 	long long		time_to_eat;
 	long long		time_to_sleep;
-	sem_t			*stop_check;
 	sem_t			*fork_check;
 	sem_t			*writing;
 	sem_t			*meal_check;
@@ -54,7 +53,7 @@ typedef struct s_philo
 int			parse(int argc, char **argv, t_rules *rules);
 int			init(t_rules *rules, t_philo **philos);
 
-void		*routine(t_philo *philo);
+void		*routine(void *arg);
 
 void		tk_forks(t_philo *philos);
 void		drop_forks(t_philo *philos);
@@ -67,5 +66,8 @@ int			ft_atoi(const char *nptr);
 long long	timeline(void);
 long long	time_lapse(long long past, long long present);
 void		print_state(t_rules *rules, int id, char *str);
+
+void		unlink_sems(void);
+void		close_sems(t_rules *rules);
 
 #endif

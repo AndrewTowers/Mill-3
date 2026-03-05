@@ -12,74 +12,25 @@
 
 #include "philo_bonus.h"
 
-int	all_ate(t_philo *philos, t_rules *rules)
-{
-	int	i;
-
-	i = 0;
-	while (i < rules->num_philos)
-	{
-		sem_wait(rules->meal_check);
-		if (rules->meals_required > 0
-			&& philos[i].meals_eaten < rules->meals_required)
-		{
-			sem_post(rules->meal_check);
-			return (0);
-		}
-		sem_post(rules->meal_check);
-		i++;
-	}
-	return (1);
-}
-
-void	died(t_philo *philos, t_rules *rules)
-{
-	int	i;
-
-	i = 0;
-	while (i < rules->num_philos)
-	{
-		sem_wait(rules->meal_check);
-		if (time_lapse(philos[i].last_meal_time
-				, timeline()) > rules->time_to_die)
-		{
-			print_state(rules, philos[i].id, "died");
-			sem_wait(rules->stop_check);
-			rules->stop = 1;
-			sem_post(rules->stop_check);
-			sem_post(rules->meal_check);
-			break ;
-		}
-		sem_post(rules->meal_check);
-		i++;
-	}
-}
-
 void	*monitor(void *arg)
 {
 	t_philo	*philos;
 	t_rules	*rules;
 
 	philos = (t_philo *)arg;
-	rules = philos[0].rules;
+	rules = philos->rules;
 	while (1)
 	{
-		died(philos, rules);
-		sem_wait(rules->stop_check);
-		if (rules->stop)
+		sem_wait(rules->meal_check);
+		if (time_lapse(philos->last_meal_time, timeline()) > rules->time_to_die)
 		{
-			sem_post(rules->stop_check);
-			break ;
+			sem_post(rules->meal_check);
+			sem_wait(rules->writing);
+			printf("%lld %d died\n", timeline() - rules->start, philos->id);
+			exit(1);
 		}
-		sem_post(rules->stop_check);
-		if (rules->meals_required > 0 && all_ate(philos, rules))
-		{
-			sem_wait(rules->stop_check);
-			rules->stop = 1;
-			sem_post(rules->stop_check);
-			break ;
-		}
-		usleep(1000);
+		sem_post(rules->meal_check);
+		usleep(50);
 	}
 	return (NULL);
 }

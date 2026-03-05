@@ -36,15 +36,10 @@ void	fake_sleep(long long time, t_rules *rules)
 {
 	long long	start;
 
+	(void)rules;
 	start = timeline();
-	sem_wait(rules->stop_check);
-	while (!rules->stop)
-	{
-		if (time_lapse(start, timeline()) >= time)
-			break ;
+	while (time_lapse(start, timeline()) < time)
 		usleep(100);
-	}
-	sem_post(rules->stop_check);
 }
 
 void	eat(t_philo *philos)
@@ -54,8 +49,8 @@ void	eat(t_philo *philos)
 	rules = philos->rules;
 	sem_wait(rules->meal_check);
 	philos->last_meal_time = timeline();
+	philos->meals_eaten++;
 	sem_post(rules->meal_check);
 	print_state(rules, philos->id, "is eating");
 	fake_sleep(rules->time_to_eat, rules);
-	philos->meals_eaten++;
 }

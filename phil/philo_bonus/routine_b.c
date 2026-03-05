@@ -12,27 +12,23 @@
 
 #include "philo_bonus.h"
 
-void	*routine(t_philo *philo)
+void	*routine(void *arg)
 {
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(200);
+		usleep(1000);
 	while (1)
 	{
-		sem_wait(philo->rules->stop_check);
-		if (philo->rules->stop)
-		{
-			sem_post(philo->rules->stop_check);
-			break ;
-		}
-		sem_post(philo->rules->stop_check);
 		print_state(philo->rules, philo->id, "is thinking");
 		tk_forks(philo);
 		eat(philo);
 		drop_forks(philo);
 		if (philo->rules->meals_required > 0
 			&& philo->meals_eaten >= philo->rules->meals_required)
-			break ;
-		print_state(philo->rules, philo->id, "is slepping");
+			exit(0);
+		print_state(philo->rules, philo->id, "is sleeping");
 		fake_sleep(philo->rules->time_to_sleep, philo->rules);
 	}
 	return (NULL);

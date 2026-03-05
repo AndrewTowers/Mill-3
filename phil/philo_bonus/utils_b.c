@@ -54,9 +54,8 @@ void	print_state(t_rules *rules, int id, char *str)
 {
 	long long	time;
 
-	time = timeline() - rules->start;
 	sem_wait(rules->writing);
-	if (!rules->stop)
+	time = timeline() - rules->start;
 		printf("%lld %d %s\n", time, id, str);
 	sem_post(rules->writing);
 }
