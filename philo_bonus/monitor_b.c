@@ -27,7 +27,7 @@ void	*monitor(void *arg)
 			sem_post(rules->meal_check);
 			sem_wait(rules->writing);
 			printf("%lld %d died\n", timeline() - rules->start, philos->id);
-			return (NULL);
+			exit(1);
 		}
 		sem_post(rules->meal_check);
 		usleep(50);
