@@ -6,11 +6,42 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:26 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 19:04:53 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:20:25 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	atint(t_rules *rules, char **argv, int argc)
+{
+	rules->num_philos = ft_atoi(argv[1]);
+	rules->time_to_die = ft_atoi(argv[2]);
+	rules->time_to_eat = ft_atoi(argv[3]);
+	rules->time_to_sleep = ft_atoi(argv[4]);
+	rules->meals_required = -1;
+	if (argc == 6)
+		rules->meals_required = ft_atoi(argv[5]);
+}
+
+int	has_ltr(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] < '0' || argv[i][j] > '9')
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	parse(int argc, char **argv, t_rules *rules)
 {
@@ -19,16 +50,16 @@ int	parse(int argc, char **argv, t_rules *rules)
 		printf("ERROR: Incorrect number of arguments.\n");
 		return (0);
 	}
-	rules->num_philos = ft_atoi(argv[1]);
-	rules->time_to_die = ft_atoi(argv[2]);
-	rules->time_to_eat = ft_atoi(argv[3]);
-	rules->time_to_sleep = ft_atoi(argv[4]);
-	rules->meals_required = -1;
-	if (argc == 6)
-		rules->meals_required = ft_atoi(argv[5]);
+	if (has_ltr(argv))
+	{
+		printf("ERROR: Invalid characters in arguments.\n");
+		return (0);
+	}
+	atint(rules, argv, argc);
 	rules->stop = 0;
 	rules->start = timeline();
-	if (rules->num_philos <= 0 || rules->time_to_die < 0 || rules->time_to_eat < 0
+	if (rules->num_philos <= 0 || rules->time_to_die < 0
+		|| rules->time_to_eat < 0
 		|| rules->time_to_sleep < 0 || (argc == 6 && rules->meals_required < 0))
 	{
 		printf("ERROR: Invalid argument values.\n");

@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:29 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 19:46:26 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:04:10 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	all_ate(t_philo *philos, t_rules *rules)
 	while (i < rules->num_philos)
 	{
 		pthread_mutex_lock(&rules->meal_check);
-		if (rules->meals_required > 0 && philos[i].meals_eaten < rules->meals_required)
+		if (rules->meals_required > 0 && philos[i].meals_eaten
+			< rules->meals_required)
 		{
 			pthread_mutex_unlock(&rules->meal_check);
 			return (0);
@@ -68,7 +69,7 @@ void	*monitor(void *arg)
 		if (rules->stop)
 		{
 			pthread_mutex_unlock(&rules->stop_check);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&rules->stop_check);
 		if (rules->meals_required > 0 && all_ate(philos, rules))

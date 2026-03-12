@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:47 by andtruji          #+#    #+#             */
-/*   Updated: 2026/03/03 12:17:20 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/03/12 15:04:49 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	print_state(t_rules *rules, int id, char *str)
 
 	sem_wait(rules->writing);
 	time = timeline() - rules->start;
-		printf("%lld %d %s\n", time, id, str);
+	printf("%lld %d %s\n", time, id, str);
 	sem_post(rules->writing);
 }
