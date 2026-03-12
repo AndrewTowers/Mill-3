@@ -4,6 +4,7 @@ Philosophers es una implementación de es una simulación del clásico "Problema
 El proyecto explora cómo evitar el deadlock (bloqueo mutuo) y las condiciones de carrera (race conditions) mientras varios filósofos sentados a una mesa circular intentan comer, pensar y dormir sin morir de hambre, compartiendo un número limitado de cubiertos (mutex).
 
 Compilación
+
 Para compilar el proyecto, clona el repositorio y ejecuta:
 
 make
