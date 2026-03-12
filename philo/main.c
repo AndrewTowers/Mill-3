@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 17:55:19 by andtruji          #+#    #+#             */
+/*   Updated: 2025/11/20 19:05:13 by andtruji         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+int	main_2(t_philo *philos, t_rules *rules)
+{
+	pthread_t	monitor_thr;
+	int			i;
+
+	i = 0;
+	pthread_create(&monitor_thr, NULL, monitor, philos);
+	pthread_join(monitor_thr, NULL);
+	while (i < rules->num_philos)
+		pthread_join(philos[i++].thread, NULL);
+	i = 0;
+	while (i < rules->num_philos)
+		pthread_mutex_destroy(&rules->forks[i++]);
+	pthread_mutex_destroy(&rules->writing);
+	pthread_mutex_destroy(&rules->meal_check);
+	pthread_mutex_destroy(&rules->stop_check);
+	free(rules->forks);
+	free(philos);
+	return (0);
+}
+
+int	is_one(t_rules rules)
+{
+	printf("0 1 has taken a fork\n");
+	usleep(rules.time_to_die * 1000);
+	printf("%lld 1 died\n", rules.time_to_die);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_rules	rules;
+	t_philo	*philos;
+	int		i;
+
+	memset(&rules, 0, sizeof(t_rules));
+	if (!parse(argc, argv, &rules))
+		return (1);
+	if (rules.num_philos == 1)
+		return (is_one(rules));
+	if (!init(&rules, &philos))
+		return (1);
+	i = 0;
+	while (i < rules.num_philos)
+	{
+		if (pthread_create(&philos[i].thread, NULL,
+				(void *)routine, &philos[i]) != 0)
+		{
+			pthread_mutex_lock(&philos->rules->stop_check);
+			rules.stop = 1;
+			pthread_mutex_unlock(&philos->rules->stop_check);
+			break ;
+		}
+		i++;
+	}
+	return (main_2(philos, &rules));
+}

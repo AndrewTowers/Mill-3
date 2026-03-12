@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_b.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 17:55:47 by andtruji          #+#    #+#             */
+/*   Updated: 2026/03/12 15:04:49 by andtruji         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo_bonus.h"
+
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	n;
+	int	s;
+
+	i = 0;
+	n = 0;
+	s = 1;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			s = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		n = n * 10 + (nptr[i] - '0');
+		i++;
+	}
+	return (n * s);
+}
+
+long long	timeline(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL));
+}
+
+long long	time_lapse(long long past, long long present)
+{
+	return (present - past);
+}
+
+void	print_state(t_rules *rules, int id, char *str)
+{
+	long long	time;
+
+	sem_wait(rules->writing);
+	time = timeline() - rules->start;
+	printf("%lld %d %s\n", time, id, str);
+	sem_post(rules->writing);
+}
