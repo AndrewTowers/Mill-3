@@ -59,8 +59,8 @@ void	child(t_philo *philos, t_rules *rules, pid_t *pids)
 		if (pids[i] == 0)
 		{
 			pthread_create(&death, NULL, monitor, &philos[i]);
-			routine(&philos[i]);
 			pthread_detach(death);
+			routine(&philos[i]);
 			free(philos);
 			free(pids);
 			exit(0);
