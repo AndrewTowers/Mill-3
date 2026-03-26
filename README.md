@@ -1,25 +1,28 @@
 *Este proyecto ha sido creado como parte del currículo de 42 por andtruji.*
 
-Philosophers es una implementación de es una simulación del clásico "Problema de los filósofos comensales" de Edsger Dijkstra. El objetivo principal es resolver un problema de concurrencia y sincronización de hilos en C.
+## **Descripción**
+
+Philosophers es a implementación de es una simulación del clásico "Problema de los filósofos comensales" de Edsger Dijkstra. El objetivo princ>ipal es resolver un problema de concurrencia y sincronización de hilos en C.
 El proyecto explora cómo evitar el deadlock (bloqueo mutuo) y las condiciones de carrera (race conditions) mientras varios filósofos sentados a una mesa circular intentan comer, pensar y dormir sin morir de hambre, compartiendo un número limitado de cubiertos (mutex).
 
-Compilación
+## **Instrucciones**
+### *Compilación*
 
 Para compilar el proyecto, clona el repositorio y ejecuta:
 
-make
+  make
 
-Ejecución
+### *Ejecución*
 Una vez compilado, puedes lanzar el programa de la siguiente manera:
 
-./philo [num_filosofos] [tiempo_morir] [tiempo_comer] [tiempo_dormir] [comidas_opcionales]
+    ./philo [num_filosofos] [tiempo_morir] [tiempo_comer] [tiempo_dormir] [comidas_opcionales]
+  e.g.
 
-e.g.
-./philo 4 410 200 200
- Nadie deberia morir.
+    ./philo 4 410 200 200
+  Nadie deberia morir.
 
-Recursos
-  Referencias
+## **Recursos**
+### *Referencias*
 
 Pthreads manual (POSIX threads)
 Mutexes en C - Tutorial de geeksforgeeks
