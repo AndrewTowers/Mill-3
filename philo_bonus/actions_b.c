@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:32 by andtruji          #+#    #+#             */
-/*   Updated: 2026/03/03 12:20:26 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/04/16 17:12:30 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void	eat(t_philo *philos)
 	t_rules	*rules;
 
 	rules = philos->rules;
-	sem_wait(rules->meal_check);
 	philos->last_meal_time = timeline();
 	philos->meals_eaten++;
-	sem_post(rules->meal_check);
 	print_state(rules, philos->id, "is eating");
 	fake_sleep(rules->time_to_eat, rules);
 }

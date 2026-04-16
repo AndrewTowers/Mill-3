@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:26 by andtruji          #+#    #+#             */
-/*   Updated: 2026/03/12 15:21:41 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/04/16 17:11:54 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	init(t_rules *rules, t_philo **philos)
 	rules->fork_check = sem_open("/fork_check",
 			O_CREAT, 0644, rules->num_philos);
 	rules->writing = sem_open("/writing", O_CREAT, 0644, 1);
-	rules->meal_check = sem_open("/meal_check", O_CREAT, 0644, 1);
 	*philos = malloc(sizeof(t_philo) * rules->num_philos);
 	if (!*philos)
 		return (0);

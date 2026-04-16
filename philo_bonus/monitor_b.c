@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:29 by andtruji          #+#    #+#             */
-/*   Updated: 2026/03/12 16:34:50 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/04/16 17:19:44 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@ void	*monitor(void *arg)
 	rules = philos->rules;
 	while (1)
 	{
-		sem_wait(rules->meal_check);
 		if (time_lapse(philos->last_meal_time, timeline()) > rules->time_to_die)
 		{
-			sem_post(rules->meal_check);
 			sem_wait(rules->writing);
 			printf("%lld %d died\n", timeline() - rules->start, philos->id);
 			exit(1);
 		}
-		sem_post(rules->meal_check);
-		usleep(50);
+		usleep(1000);
 	}
 	return (NULL);
 }
