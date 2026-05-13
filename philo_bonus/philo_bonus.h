@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:52 by andtruji          #+#    #+#             */
-/*   Updated: 2026/04/16 17:10:52 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:50:55 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_rules
 	long long		time_to_sleep;
 	sem_t			*fork_check;
 	sem_t			*writing;
+	sem_t			*meals_check;
 	long long		start;
 }	t_rules;
 

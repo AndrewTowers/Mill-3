@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:32 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 18:52:33 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:39:53 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	fake_sleep(long long time, t_rules *rules)
 		pthread_mutex_unlock(&rules->stop_check);
 		if (time_lapse(start, timeline()) >= time)
 			break ;
-		usleep(100);
+		usleep(500);
 	}
 }
 

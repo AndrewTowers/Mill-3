@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:35 by andtruji          #+#    #+#             */
-/*   Updated: 2025/11/20 18:49:02 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:39:53 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		usleep(200);
+		usleep(1500);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->rules->stop_check);

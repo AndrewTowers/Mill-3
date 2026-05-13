@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:19 by andtruji          #+#    #+#             */
-/*   Updated: 2026/04/16 17:19:44 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/05/13 12:15:06 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main_2(t_philo *philos, t_rules *rules, pid_t *pids)
 			i = 0;
 			while (i < rules->num_philos)
 			{
-				kill(pids[i], SIGTERM);
+				kill(pids[i], SIGKILL);
 				i++;
 			}
 		}

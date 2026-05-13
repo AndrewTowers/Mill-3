@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 15:03:11 by andtruji          #+#    #+#             */
-/*   Updated: 2026/04/16 17:12:41 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:51:05 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	close_sems(t_rules *rules)
 {
 	sem_close(rules->fork_check);
 	sem_close(rules->writing);
+	sem_close(rules->meals_check);
 }

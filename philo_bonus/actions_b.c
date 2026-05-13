@@ -6,7 +6,7 @@
 /*   By: andtruji <andtruji@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:55:32 by andtruji          #+#    #+#             */
-/*   Updated: 2026/04/16 17:12:30 by andtruji         ###   ########.fr       */
+/*   Updated: 2026/05/13 12:05:37 by andtruji         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	tk_forks(t_philo *philos)
 	t_rules	*rules;
 
 	rules = philos->rules;
+	sem_wait(rules->meals_check);
 	sem_wait(rules->fork_check);
 	print_state(rules, philos->id, "has taken a fork");
 	sem_wait(rules->fork_check);
@@ -30,6 +31,7 @@ void	drop_forks(t_philo *philos)
 	rules = philos->rules;
 	sem_post(rules->fork_check);
 	sem_post(rules->fork_check);
+	sem_post(rules->meals_check);
 }
 
 void	fake_sleep(long long time, t_rules *rules)
@@ -39,7 +41,7 @@ void	fake_sleep(long long time, t_rules *rules)
 	(void)rules;
 	start = timeline();
 	while (time_lapse(start, timeline()) < time)
-		usleep(100);
+		usleep(500);
 }
 
 void	eat(t_philo *philos)
